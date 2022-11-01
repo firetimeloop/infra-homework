@@ -22,11 +22,3 @@ cat << EOF
 }
 EOF
 }
-
-echo "Запрос на заполнение релизного тикета"
-curl --location --request PATCH "${TICKET_URL}" \
---header "${headerXOrgId}" \
---header "${headerAuthorization}" \
---header 'Content-Type: application/json' \
---data-raw "$(requestData)"
-echo "Запрос на заполнение релизного тикета выполнен"

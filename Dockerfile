@@ -1,6 +1,6 @@
 FROM node:16.6 as build 
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
