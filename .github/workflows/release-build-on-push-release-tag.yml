@@ -35,6 +35,9 @@ jobs:
       - name: установка node модулей
         run: npm ci
 
+      - name: билд приложения
+        run: npm run build
+
       - name: заполнение релизного тикета
         run: ./.github/scripts/fill-realese-ticket.sh
       
