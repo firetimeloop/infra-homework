@@ -1,8 +1,7 @@
 name: ci-check-on-push
 run-name: ${{ github.actor }} запустил компиляцию typescript и линтинг кода проекта
-on: 
-  workflow_call:
-    [push]
+on: [push, workflow_call]
+    
 jobs:
   typescript-and-eslint-check:
     runs-on: ubuntu-latest
