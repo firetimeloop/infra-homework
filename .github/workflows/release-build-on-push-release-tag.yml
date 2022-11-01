@@ -1,0 +1,44 @@
+name: release-build-on-push-release-tag
+run-name: ${{ github.actor }} запустил сборку релиза при пуше релизного тега
+
+on:
+  push:
+    tags:
+      - 'rc-0.0.[0-9]+'
+      
+env:
+  AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+  X_ORG_ID: ${{ secrets.X_ORG_ID }}
+  TICKET_URL: ${{ secrets.TICKET_URL }}
+  ACTOR: ${{ github.actor }}
+  DOCKER_IMAGE_TAG: ${{ github.ref_name }}
+
+jobs:
+  typescript-and-eslint-check:
+    name: компиляция typescript и линтинг кода проекта
+    uses: ./.github/workflows/ci-check-on-push.yml
+
+  release-build:
+    needs: typescript-and-eslint-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull репозитория и ветки для доступа к коду
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: установка node js 16.16.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.16.0'
+
+      - name: установка node модулей
+        run: npm ci
+
+      - name: заполнение релизного тикета
+        run: ./.github/scripts/fill-realese-ticket.sh
+      
+      - name: Создаем докер образ с production-версией
+        run: |
+          docker build -t ${DOCKER_IMAGE_TAG} .
+          echo "Докер образ с тегом ${DOCKER_IMAGE_TAG} создан"

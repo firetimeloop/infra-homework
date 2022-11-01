@@ -7,13 +7,17 @@ jobs:
     steps:
       - name: pull репозитория и ветки для доступа к коду
         uses: actions/checkout@v3
+
       - name: установка node js 16.16.0
         uses: actions/setup-node@v3
         with:
           node-version: '16.16.0'
+
       - name: установка node модулей
         run: npm ci
+
       - name: запуск компиляции typescript
         run: npm run ts
+        
       - name: запуск линтинга кода проекта
         run: npm run lint
