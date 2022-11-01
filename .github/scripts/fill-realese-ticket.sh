@@ -2,6 +2,7 @@
 
 export LANG=C.UTF-8
 
+echo "${TICKET_URL}"
 echo "Создание заголовков для запроса заполнения релизного тикета"
 headerAuthorization="Authorization: OAuth ${AUTH_TOKEN}"
 headerXOrgId="X-Org-ID: ${X_ORG_ID}"
