@@ -12,7 +12,7 @@ echo "$(git tag --sort=committerdate)"
 lastTag="$(git tag --sort=committerdate | grep -E 'rc-0.0.[0-9]+' | tail -1)"
 previousTag="$(git tag --sort=committerdate | grep -E 'rc-0.0.[0-9]+' | tail -2)"
 echo "${previousTag} ${lastTag}"
-echo "$(git log ${previousTag}..${lastTag}})"
+echo "$(git log ${previousTag}..${lastTag})"
 
 echo "Создание тела для запроса заполнения релизного тикета"
 commits="$(git log ${previousTag}..${lastTag} --pretty=format:"%h | %an | %s")"
